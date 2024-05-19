@@ -4,48 +4,48 @@ pipeline {
     stages {
         stage('Trigger Downstream Jobs') {
             parallel {
-                stage('Trigger Downstream Job 1') {
+                stage('Trigger Downstream GO-LANG-CI Job') {
                     steps {
                         script {
                             echo 'Triggering Downstream Job 1...'
-                            def job1 = build job: 'Go-Lang-Builder', wait: true
+                            def job1 = build job: 'GO-LANG-CI', wait: true
                             if (job1.result == 'SUCCESS') {
-                                echo 'Downstream Job 1 completed successfully.'
+                                echo 'Downstream GO-LANG-CI Job completed successfully.'
                             } else {
-                                error 'Downstream Job 1 failed!'
+                                error 'Downstream GO-LANG-CI Job failed!'
                             }
                         }
                     }
                 }
-                stage('Trigger Downstream Job 2') {
+                stage('Trigger Downstream NEXTJS-CI Job') {
                     steps {
                         script {
                             echo 'Triggering Downstream Job 2...'
-                            def job2 = build job: 'Wordpress-PHP-Builder', wait: true
+                            def job2 = build job: 'NEXTJS-CI', wait: true
                             if (job2.result == 'SUCCESS') {
-                                echo 'Downstream Job 2 completed successfully.'
+                                echo 'Downstream NEXTJS-CI Job completed successfully.'
                             } else {
-                                error 'Downstream Job 2 failed!'
+                                error 'Downstream NEXTJS-CI Job failed!'
                             }
                         }
                     }
                 }
-                stage('Trigger Downstream Job 3') {
+                stage('Trigger Downstream WORDPRESS-CI Job') {
                     steps {
                         script {
-                            echo 'Triggering Downstream Job 3...'
-                            def job3 = build job: 'Nextjs-Typescript-Builder', wait: true
+                            echo 'Triggering Downstream WORDPRESS-CI Job...'
+                            def job3 = build job: 'WORDPRESS-CI', wait: true
                             if (job3.result == 'SUCCESS') {
-                                echo 'Downstream Job 3 completed successfully.'
+                                echo 'Downstream WORDPRESS-CI Job completed successfully.'
                             } else {
-                                error 'Downstream Job 3 failed!'
+                                error 'Downstream WORDPRESS-CI Job failed!'
                             }
                         }
                     }
                 }
             }
         }
-        stage('Execute Task After Jobs') {
+        stage('Deploy into Remote Server ') {
             steps {
                 echo 'All downstream jobs completed successfully. Executing the task...'
             }
