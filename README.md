@@ -94,7 +94,7 @@ A Jenkins server was configured to manage the CI/CD pipelines. The server is acc
     - Responsible for deploying updated Docker images into the Docker Compose remote server.
 
 ### Live Links and Ports
-
+[Note :server is inactive]
 - **Next.js:** [http://18.61.31.214:3000/](http://18.61.31.214:3000/)
 - **Go-Lang:** [http://18.61.31.214:8082/](http://18.61.31.214:8082/)
 - **Go-DB:** [http://18.61.31.214:8081/](http://18.61.31.214:8081/) (Credentials: admin, pass)
