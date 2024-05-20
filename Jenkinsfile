@@ -7,7 +7,7 @@ pipeline {
                 stage('Trigger Downstream GO-LANG-CI Job') {
                     steps {
                         script {
-                            echo 'Triggering Downstream Job 1...'
+                            echo 'Triggering Downstream GO-LANG-CI Job...'
                             def job1 = build job: 'GO-LANG-CI', wait: true
                             if (job1.result == 'SUCCESS') {
                                 echo 'Downstream GO-LANG-CI Job completed successfully.'
@@ -20,7 +20,7 @@ pipeline {
                 stage('Trigger Downstream NEXTJS-CI Job') {
                     steps {
                         script {
-                            echo 'Triggering Downstream Job 2...'
+                            echo 'Triggering Downstream NEXTJS-CI Job...'
                             def job2 = build job: 'NEXTJS-CI', wait: true
                             if (job2.result == 'SUCCESS') {
                                 echo 'Downstream NEXTJS-CI Job completed successfully.'
@@ -47,7 +47,18 @@ pipeline {
         }
         stage('Deploy into Remote Server ') {
             steps {
-                echo 'All downstream jobs completed successfully. Executing the task...'
+                sshagent(credentials: ['ssh-key']) {
+                    sh '''
+                        ssh ubuntu@18.61.226.17 bash -c "'
+                            cd Docker-files;
+                            bash run.sh go-lang-ecr ;
+                            bash run.sh nextjs-ecr ;
+                            bash run.sh wordpress-ecr ;
+                            docker-compose build;
+                            docker-compose up -d
+                        '"
+                    '''
+                }
             }
         }
     }
